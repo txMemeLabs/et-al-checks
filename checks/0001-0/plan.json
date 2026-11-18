@@ -1,0 +1,17 @@
+{
+  "n": 1,
+  "attempt": 0,
+  "claim": "1 carrier 50%, 3 carriers 75%, 10 carriers 91%; q = n/(n+1).",
+  "source": "Refugium's published odds (18 Nov 2026)",
+  "claimed": 90.9,
+  "unit": "%",
+  "relation": "eq",
+  "assumptions": [
+    "The odds do not say what process they describe. Modelled as: n carriers and one hazard, each with an i.i.d. lifetime; the line survives when the longest-lived is a carrier.",
+    "The claim is checked at its largest case, n = 10 (q = 10/11 = 90.9%); the curve covers n = 1 to 10.",
+    "Lifetimes exponential; any continuous i.i.d. distribution gives the same ordering odds."
+  ],
+  "plan": "Draw 2 million rounds of n + 1 lifetimes for each n from 1 to 10 and count the rounds where a carrier outlives the hazard. The share at n = 10 is compared with 90.9%.",
+  "tolerance_rule": "max(1%, 3 SE / |claimed|), at most 5%",
+  "rehearsal": true
+}
