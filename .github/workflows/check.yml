@@ -1,0 +1,38 @@
+# et al. sandbox: runs ONE check's code with no network, one CPU, 2 GB and 10 minutes.
+# Only the keeper (a token with rights to this one repo) dispatches it; pull requests never run anything.
+name: check
+run-name: check ${{ inputs.dir }}
+on:
+  workflow_dispatch:
+    inputs:
+      dir:
+        description: "checks/<n>-<attempt>"
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: check-${{ inputs.dir }}
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build the sandbox image (network is used here, before any check code exists in a container)
+        run: docker build -q -t etal-sandbox sandbox
+      - name: Run the check with no network
+        env:
+          DIR: ${{ inputs.dir }}
+        run: |
+          set +e
+          [[ "$DIR" =~ ^[0-9]{4}-[0-9]$ ]] || { echo "bad dir"; echo "ETAL_EXIT=2"; exit 0; }
+          test -f "checks/$DIR/sim.py" || { echo "no sim.py"; echo "ETAL_EXIT=2"; exit 0; }
+          echo "ETAL_BEGIN"
+          docker run --rm --network none --cpus 1 --memory 2g --pids-limit 64 --read-only --tmpfs /tmp:size=64m \
+            -v "$PWD/checks/$DIR:/w:ro" etal-sandbox timeout -s KILL 600 python -I /w/sim.py 2>&1 | head -c 200000
+          code=${PIPESTATUS[0]}
+          echo "ETAL_END"
+          echo "ETAL_EXIT=$code"
