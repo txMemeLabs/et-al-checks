@@ -1,0 +1,17 @@
+{
+  "n": 4,
+  "attempt": 0,
+  "claim": "An attacker with 10% of the hash power (q = 0.1) catches up from z = 5 blocks with probability P = 0.0009137.",
+  "source": "https://bitcoin.org/bitcoin.pdf",
+  "claimed": 0.0009137,
+  "unit": "",
+  "relation": "eq",
+  "assumptions": [
+    "The whitepaper approximates the attacker's progress with a Poisson count. Here the race is counted exactly: while the honest chain finds z blocks, each block is the attacker's with probability q (negative binomial).",
+    "From k blocks the attacker catches up from z - k behind with probability (q/p)^(z-k), as in the whitepaper; k >= z counts as caught up.",
+    "The merchant waits exactly z blocks after the payment."
+  ],
+  "plan": "Sample the attacker's block count during the honest chain's z blocks 20 million times and average the catch-up probability. The curve gives z = 0 to 5.",
+  "tolerance_rule": "max(1%, 3 SE / |claimed|), at most 5%",
+  "rehearsal": true
+}
