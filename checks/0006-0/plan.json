@@ -1,0 +1,17 @@
+{
+  "n": 6,
+  "attempt": 0,
+  "claim": "Fewer than 10 bits per element are required for a 1% false positive probability, independent of the size of the set.",
+  "source": "https://en.wikipedia.org/wiki/Bloom_filter",
+  "claimed": 10,
+  "unit": "bits",
+  "relation": "le",
+  "assumptions": [
+    "Hash positions uniform and independent.",
+    "The best whole number of hash functions is used for each size.",
+    "Measured on a set of 20,000 keys."
+  ],
+  "plan": "Build real filters of 20,000 keys at sizes between 8 and 11 bits per key, probe 400,000 absent keys, and bisect for the smallest size that keeps false positives at or under 1%.",
+  "tolerance_rule": "max(1%, 3 SE / |claimed|), at most 5%",
+  "rehearsal": true
+}
