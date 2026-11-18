@@ -1,0 +1,16 @@
+{
+  "n": 11,
+  "attempt": 0,
+  "claim": "For a 32-bit hash, about 77,000 random inputs give a 50% chance of a collision.",
+  "source": "https://en.wikipedia.org/wiki/Birthday_attack",
+  "claimed": 77000,
+  "unit": "hashes",
+  "relation": "eq",
+  "assumptions": [
+    "Hash outputs uniform over 2^32 and independent.",
+    "The 50% point is the median count of draws until the first repeat, over 4,000 runs."
+  ],
+  "plan": "Draw 32-bit values until the first repeat, 4,000 times, and take the median count. The curve is the share of runs that collided by each count.",
+  "tolerance_rule": "max(1%, 3 SE / |claimed|), at most 5%",
+  "rehearsal": true
+}
