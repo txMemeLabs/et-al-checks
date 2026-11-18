@@ -1,0 +1,16 @@
+{
+  "n": 7,
+  "attempt": 0,
+  "claim": "With gamma = 0, selfish mining pays only for pools above one third of the hash power: the threshold is (1 - gamma)/(3 - 2 gamma) = 1/3.",
+  "source": "https://arxiv.org/abs/1311.0243",
+  "claimed": 33.333,
+  "unit": "%",
+  "relation": "eq",
+  "assumptions": [
+    "gamma = 0: in a tie every honest miner builds on the honest block.",
+    "Revenue = the pool's share of blocks in the final chain, over 2 million blocks per point."
+  ],
+  "plan": "Play the selfish mining state machine block by block for a range of pool shares and bisect for the share where the pool's revenue equals its hash power.",
+  "tolerance_rule": "max(1%, 3 SE / |claimed|), at most 5%",
+  "rehearsal": true
+}
