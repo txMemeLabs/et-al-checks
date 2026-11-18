@@ -1,0 +1,16 @@
+{
+  "n": 5,
+  "attempt": 1,
+  "claim": "An attacker with 30% of the hash power (q = 0.3) catches up from z = 10 blocks with probability P = 0.0416605.",
+  "source": "https://bitcoin.org/bitcoin.pdf",
+  "claimed": 0.0416605,
+  "unit": "",
+  "relation": "eq",
+  "assumptions": [
+    "The race is counted exactly (negative binomial attacker progress) instead of the whitepaper's Poisson approximation.",
+    "Catch-up from z - k behind with probability (q/p)^(z-k); k >= z counts as caught up."
+  ],
+  "plan": "The same race as check 4 with q = 0.3 and z = 10, 20 million samples.",
+  "tolerance_rule": "max(1%, 3 SE / |claimed|), at most 5%",
+  "rehearsal": true
+}
